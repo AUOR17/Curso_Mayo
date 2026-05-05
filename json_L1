@@ -1,0 +1,76 @@
+import json
+
+texto_json = '''
+{
+    "nombre": "Alan",
+    "clase": "Mago", 
+    "nivel": 5,
+    "es_vip": true,
+    "mascota": null
+}
+'''
+
+# print(type(texto_json).__name__)
+
+perfil_python = json.loads(texto_json)
+
+print(type(perfil_python).__name__)
+
+# modificacones = {"nivel":6, "oro":150, "es_vip":False}
+# perfil_python.update(modificacones)
+
+# jsn_convert = json.dumps(perfil_python,indent=2)
+
+# print(jsn_convert)
+
+with open('users.json', 'r', encoding='utf-8') as archivo:
+    usuarios = json.load(archivo)
+
+print(type(usuarios).__name__)
+
+# print(usuarios[0]["address"]["street"])
+
+primer_usuario = usuarios[0]
+direccion_pu = primer_usuario["address"]
+calle_pu = direccion_pu["street"]
+# print(calle_pu)
+
+for u in usuarios:
+    nombre_user = u["name"]
+    ciudad = u["address"]["city"]
+    # print(f"El usuario {nombre_user} vive en {ciudad}")
+
+nort = []
+sur = []
+
+# for u in usuarios:
+#     latitud = float(u['address']['geo']['lat'])
+
+#     if latitud < 0:
+#         sur.append(u['name'])
+#     else:
+#         nort.append(u['name'])
+
+# print(F"Los usuarios que viven en el norte: {nort}")
+# print(F"Los usuarios que viven en el sur: {sur}")
+
+usuarios_limpios = []
+
+for u in usuarios:
+    nombre = u["name"]
+    correo = u['email']
+    empresa = u['company']['name']
+    ciudad = u['address']['city']
+
+    perfil_mk = {
+        "Nombre Completo": nombre, 
+        "Email de contacto": correo, 
+        "Compañia": empresa, 
+        "Ciudad": ciudad
+        }
+
+    usuarios_limpios.append(perfil_mk)
+
+with open("mk_prosp.json", 'w', encoding='utf-8') as archivo_new:
+    json.dump(usuarios_limpios, archivo_new, indent=2, ensure_ascii=False)
+
