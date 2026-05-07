@@ -51,3 +51,36 @@ def test_creacion_personaje_npc(clase_personaje, nombre, salud_max, atributo_ext
         assert personaje_creado.enfurecido == False
     elif isinstance(personaje_creado, Guerrero):
         assert personaje_creado.puntos_armadura == 50
+
+def test_guardar_personaje(db_limpia):
+
+    gremio_nuevo = Gremio("Castle")
+    harry = Mago("Harry", salud_maxima=190, mana_maximo=500)
+
+    conexion = obtener_conexion()
+    cursor = conexion.cursor()
+
+    cursor.execute("INSERT INTO gremios (nombre_gremio) VALUES (?)", (gremio_nuevo.nombre_gremio,))
+    gremio_id = cursor.lastrowid
+
+    cursor.execute('''
+        INSERT INTO personajes (nombre, salud_maxima, tipo_clase, mana_maximo, gremio_id)
+        VALUES (?,?,?,?,?)
+    ''', (harry.nombre, harry.salud_maxima, "Mago", harry.mana_maximo, gremio_id))
+
+    conexion.commit()
+
+    cursor.execute('''
+        SELECT p.nombre, g.nombre_gremio
+        FROM personajes p 
+        JOIN gremios g ON p.gremio_id = g.id
+        WHERE p.nombre = "Harry"
+    ''')
+
+    resultado = cursor.fetchone()
+
+    assert resultado is not None, "El personaje no se guardo en la DB"
+    assert resultado[0] == "Harry", "El nombre guardado es incorrecto"
+    assert resultado[1] == "Castle", "La relacion de LLave foranea fallo"
+
+    conexion. close()
