@@ -25,10 +25,8 @@ export default function AddAdventurer({guild, onSuccess}: AddAdventurerProps) {
         try {
             await api.post("adventurers/", {
                 name: newName,
-                class: newClass,
+                class_type: newClass,
                 guild: newGuild, 
-                level: 1,
-                status: "ACTIVE"
             });
 
             setNewName("");

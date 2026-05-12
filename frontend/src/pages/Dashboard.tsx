@@ -55,13 +55,13 @@ export default function Dashboard(){
                 </Button>
             </div>
 
-            <div>
+            <div className="flex flex-col lg:flex-row gap-8 items-start">
                 <div className="flex flex-col gap-8 w-80 shrink-0">
                     <AddAdventurer guild={guilds} onSuccess={cargarTablero} />
                     <AddGuild onSuccess={cargarTablero} />
                 </div>
 
-                <div className="flex-1 grid grid-cols-[repeat(auto-fill, minmax(250px, 1fr))] gap-6 content-start">
+                <div className="flex-1 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-6 content-start">
                     {adventurers.length === 0 ? (
                         <p className="text-gray-500"> No hay aventureros registrados aun </p>
                     ) : (

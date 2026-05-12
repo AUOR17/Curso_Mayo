@@ -25,7 +25,7 @@ export default function Login(){
     };
 
     return (
-        <div className="min-h-screen bg-gray-900 text-white p-8 font-sans">
+        <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white p-8 font-sans">
             <div className="bg-gray-800 p-8 rounded-lg shadow-xl w-96 border border-gray-700">
                 <h1 className="text-3xl font-bold text-yellow-500 mb-8">Iniciar Sesión</h1>
 
