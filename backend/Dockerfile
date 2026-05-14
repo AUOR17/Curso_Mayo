@@ -1,0 +1,16 @@
+FROM python:3.12-slim
+
+# EVITA QUE PYTHON GUARDE ARCHIVOS .pyc
+ENV PYTHONDONTWRITEBYTECODE 1 
+
+# EVITA QUE SE RETRASEN LOS PRINTS
+ENV PYTHONBUFFERED 1 
+
+# Carpeta de trabajo dentro del contenedor
+WORKDIR /app
+
+# COPIAMOS LAS DEPENDENCIAS Y LAS INSTALAMOS
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . /app/
