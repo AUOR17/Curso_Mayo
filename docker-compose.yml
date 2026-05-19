@@ -1,0 +1,49 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: db_castle
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - rpg_network
+
+  backend_core:
+    build: ./backend_core
+    container_name: django_castle
+    volumes:
+      - ./backend_core:/app
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    networks:
+      - rpg_network
+
+  
+  frontend_spa:
+    build: ./frontend_spa
+    container_name: react_castle
+    volumes:
+      - ./frontend_spa:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    stdin_open: true
+    tty: true
+    networks:
+      - rpg_network
+
+networks:
+  rpg_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
