@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme{
+  --color-rpg-dust: #C9A496;
+  --color-rpg-parchment: #F5EEE8;
+  --color-rpg-bone: #EADCBF;
+  --color-rpg-gold: #CCB47D;
+  --color-rpg-dark: #1D201D;
+  --color-rpg-blood: #821715;
+  --color-rpg-silver: #C8C9CB;
+}

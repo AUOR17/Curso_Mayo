@@ -32,8 +32,10 @@ class GremioListCreateView(generics.ListCreateAPIView):
     
     def get_permissions(self):
         if self.request.method == 'POST':
-            return [EsGranMaestro()]
-        return [IsAuthenticated()]
+            permission_classes = [IsAuthenticated, EsGranMaestro]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
 class NombrarMaestroView(APIView):
     permission_classes = [EsGranMaestro]
@@ -104,7 +106,13 @@ class SedeMiembrosView(APIView):
 class GremioDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Gremio.objects.all()
     serializer_class = GremioSerializer
-    permission_classes = [EsGranMaestro]
+    def get_permissions(self):
+        if self.request.method in ['PUT', 'PATCH', 'DELETE']:
+            permission_classes = [IsAuthenticated, EsGranMaestro]
+        else:
+            permission_classes = [IsAuthenticated]
+        return [permission() for permission in permission_classes]
+
 
 
 
